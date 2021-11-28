@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import { StyleSheet, Pressable, ScrollView, Dimensions, View, TextInput } from 'react-native';
 import ChatBubble from './Components/ChatBubble';
 import TextFieldView from './Components/TextFieldView';
@@ -34,15 +34,18 @@ async function GetCBResponse() {
     console.error(error);
   }
 } 
+const scrollViewRef = useRef();
   return (
    
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}> 
+      <View style={styles.container2}>
+
+      <ScrollView ref={scrollViewRef} style={styles.scrollView}  onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}> 
       {chats.slice(0).map((chat) => (
         <ChatBubble text={chat.text} isMe= {chat.isMe}></ChatBubble>
       ))}
       </ScrollView>
-     
+      </View>
      
 {/* <TextFieldView chats={chats} text={text}> </TextFieldView> */}
       <StatusBar style="auto" />
@@ -69,9 +72,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    
+  },
+  container2: {
+    
+   height:"75%"
+    
   },
   scrollView: {
    marginTop:"30%",
+   
   },
   circleBtn: {
     width: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 25,
@@ -80,12 +90,7 @@ const styles = StyleSheet.create({
     borderRadius: Math.round(Dimensions.get('window').width) / 2,
     marginLeft:"65%",
   },
-container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
 bottomContainer: {
 flex: 1,
 justifyContent: 'flex-end',
