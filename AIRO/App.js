@@ -3,10 +3,9 @@ import React from 'react';
 import {useState, useRef} from 'react';
 import { StyleSheet, Pressable, ScrollView, Dimensions, View, TextInput } from 'react-native';
 import ChatBubble from './Components/ChatBubble';
-import TextFieldView from './Components/TextFieldView';
 export default function App() {
-  const [text, action] = useState("");
-  const [chats, action2] = useState([{}]);
+  const [text, setText] = useState("");
+  const [chats, setChats] = useState([{}]);
 // let chats = [
 //   {
 
@@ -14,7 +13,7 @@ export default function App() {
 // ]
 async function GetCBResponse() {
   console.log("hi");
-  
+  setText("")
   try {
     let response = await fetch(
       `https://chatbot-api-dtqb5qffza-ue.a.run.app/test?text=${encodeURIComponent(text)}`,
@@ -24,7 +23,7 @@ async function GetCBResponse() {
     let responseJson = await response.json();
     console.log(responseJson);
     // action2([...chats, ]);
-    action2([...chats, {text: text, isMe: true}, {text: responseJson.response, isMe: false}]);
+    setChats([...chats, {text: text, isMe: true}, {text: responseJson.response, isMe: false}]);
     
    ;
    
@@ -55,7 +54,7 @@ const scrollViewRef = useRef();
     <View style={styles.bottomContainer}>
     </View>
     <TextInput onChangeText={
-          action
+          setText
         } style={styles.input} value={text} ></TextInput>
     <Pressable style= {styles.circleBtn} onPress={GetCBResponse}></Pressable>
         
