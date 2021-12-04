@@ -23,8 +23,9 @@ async function GetCBResponse() {
     console.log(response);
     let responseJson = await response.json();
     console.log(responseJson);
+    // action2([...chats, ]);
+    action2([...chats, {text: text, isMe: true}, {text: responseJson.response, isMe: false}]);
     
-    action2([...chats, {text: responseJson.response, isMe: false}]);
    ;
    
    

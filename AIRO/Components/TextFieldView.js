@@ -13,7 +13,7 @@ export default function TextFieldView(chats, text) {
           let response = await fetch(
             `https://chatbot-api-dtqb5qffza-ue.a.run.app/test?text=${encodeURIComponent(this.text)}`,
           );
-          chats = [{text: "Hi", isMe: true}]
+          this.chats = [{text: text, isMe: true}]
           console.log(response);
           let responseJson = await response.json();
           console.log(responseJson);
