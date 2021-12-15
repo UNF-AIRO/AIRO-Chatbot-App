@@ -3,6 +3,7 @@ import React from 'react';
 import {useState, useRef} from 'react';
 import { StyleSheet, Pressable, ScrollView, Dimensions, View, TextInput } from 'react-native';
 import ChatBubble from './Components/ChatBubble';
+import {KeyboardAvoidingView} from 'react-native';
 export default function App() {
   const [text, setText] = useState("");
   const [chats, setChats] = useState([{}]);
@@ -38,6 +39,10 @@ const scrollViewRef = useRef();
   return (
    
     <View style={styles.container}>
+       <KeyboardAvoidingView
+    behavior={Platform.OS == "ios" ? "padding" : "height"}
+    keyboardVerticalOffset={Platform.OS == "ios" ? 0 : 20}
+    enabled={Platform.OS === "ios" ? true : false}>
       <View style={styles.container2}>
 
       <ScrollView ref={scrollViewRef} style={styles.scrollView}  onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}> 
@@ -61,6 +66,7 @@ const scrollViewRef = useRef();
     
    
     </View>
+    </KeyboardAvoidingView>
     </View>
 
   );
@@ -72,6 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+
     
   },
   container2: {
